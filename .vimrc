@@ -15,6 +15,10 @@
 " have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
 
+" Use the , as the leader since it is readily available in both fr_CH and
+" en_US keyboard
+let mapleader=" "
+
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific.
@@ -22,7 +26,7 @@ set nocompatible
 filetype off " required by Vundle
 
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call vundle#rc()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -49,7 +53,15 @@ Plugin 'tomasr/molokai'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'morhetz/gruvbox'
 
-call vundle#end()         " required
+Bundle "L9"
+Bundle "FuzzyFinder"
+
+Bundle "ack.vim"
+noremap <Leader>ç "ayiw:Ack <C-r>a<CR>
+vnoremap <Leader>ç "ay:Ack <C-r>a<CR>
+
+
+"call vundle#end()         " required
 filetype plugin indent on " required
 
 
@@ -117,6 +129,9 @@ set backspace=indent,eol,start
 " When opening a new line and no filetype-specific indenting is enabled, keep
 " the same indent as the line you're currently on. Useful for READMEs, etc.
 set autoindent
+set cindent
+set cinoptions=:s,ps,ts,cs
+set cinwords=if,else,while,do,for,foreach,switch,case
 
 " Stop certain movements from always going to the first character of a line.
 " While this behaviour deviates from that of Vi, it does what most users
@@ -207,3 +222,59 @@ let g:syntastic_php_checkers = ['php']
 
 nmap <F8> :TagbarToggle<CR>
 set background=dark
+
+" Specific options
+set incsearch
+set nowritebackup
+set nobackup
+set modeline
+set modelines=5
+
+set fo+=o " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+set fo-=r " Do not automatically insert a comment leader after an enter
+set fo-=t " Do no auto-wrap text using textwidth (does not apply to comments)
+
+set showmatch
+set matchtime=5
+
+set showcmd
+set shortmess=atI
+
+" Command and Auto commands
+" Sudo write
+comm! W exec 'w !sudo tee % > /dev/null' | e!
+
+au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru} set ft=ruby
+au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                     set ft=markdown
+au BufRead,BufNewFile {COMMIT_EDITMSG}                            set ft=gitcommit
+
+" Restore position in file
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal g'\"" | endif
+
+" Edit vimrc
+nnoremap <silent> <Leader>rs :source ~/.vimrc<CR>
+nnoremap <silent> <Leader>rt :tabnew ~/.vimrc<CR>
+nnoremap <silent> <Leader>re :e ~/.vimrc<CR>
+
+map <S-CR> A<CR><ESC>
+inoremap <S-CR> <ESC>A<CR>
+
+map <silent> <Leader>2h :runtime! syntax/2html.vim<CR>
+
+set guioptions-=T
+set guioptions+=c
+
+" This is for fuzzyfinder
+let g:fuf_modesDisable = []
+nnoremap <silent> <Leader>h :FufHelp<CR>
+nnoremap <silent> <Leader>2 :FufFileWithCurrentBufferDir<CR>
+nnoremap <silent> <Leader>@ :FufFile<CR>
+nnoremap <silent> <Leader>3 :FufBuffer<CR>
+nnoremap <silent> <Leader>4 :FufDirWithCurrentBufferDir<CR>
+nnoremap <silent> <Leader>$ :FufDir<CR>
+nnoremap <silent> <Leader>5 :FufChangeList<CR>
+nnoremap <silent> <Leader>6 :FufMruFile<CR>
+nnoremap <silent> <Leader>7 :FufLine<CR>
+nnoremap <silent> <Leader>8 :FufBookmark<CR>
+nnoremap <silent> <Leader>* :FuzzyFinderAddBookmark<CR><CR>
+nnoremap <silent> <Leader>9 :FufTaggedFile<CR>
