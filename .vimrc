@@ -78,8 +78,8 @@ endif
 
 " Setting up Vundle - the vim plugin bundler end
 
-noremap <Leader>ç "ayiw:Ack <C-r>a<CR>
-vnoremap <Leader>ç "ay:Ack <C-r>a<CR>
+noremap <Leader>a "ayiw:Ack <C-r>a<CR>
+vnoremap <Leader>a "ay:Ack <C-r>a<CR>
 
 
 filetype plugin indent on " required
