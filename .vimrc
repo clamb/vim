@@ -25,11 +25,24 @@ let mapleader=" "
 " filetype indent plugin on
 filetype off " required by Vundle
 
-set rtp+=~/.vim/bundle/Vundle.vim
+" Setting up Vundle - the vim plugin handler
+let iCanHazVundle = 1
+let vundle_readme = expand('~/vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+  echo "Installing Vundle..."
+  echo ""
+  silent !mkdir -p ~/vim/bundle
+  silent !git clone https://github.com/gmarik/vundle ~/vim/bundle/vundle
+  let iCanHazVundle = 0
+endif
+
+set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Bundle 'gmarik/vundle'
+Bundle 'Syntastic'
+Bundle 'altercation/vim-colors-solarized'
 
 " Plugins
 Plugin 'tpope/vim-fugitive'
@@ -44,7 +57,6 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'rstacruz/sparkup'
-Plugin 'scrooloose/syntastic'
 Plugin 'godlygeek/tabular'
 Plugin 'majutsushi/tagbar'
 
@@ -57,11 +69,19 @@ Bundle "L9"
 Bundle "FuzzyFinder"
 
 Bundle "ack.vim"
+
+if iCanHazVundle == 0
+  echo "Installing Bundles, please ignore key map error messages"
+  echo ""
+  :BundleInstall
+endif
+
+" Setting up Vundle - the vim plugin bundler end
+
 noremap <Leader>ç "ayiw:Ack <C-r>a<CR>
 vnoremap <Leader>ç "ay:Ack <C-r>a<CR>
 
 
-"call vundle#end()         " required
 filetype plugin indent on " required
 
 
