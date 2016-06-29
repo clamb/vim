@@ -23,58 +23,41 @@ let mapleader=" "
 " contents. Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific.
 " filetype indent plugin on
-filetype off " required by Vundle
+filetype on
 
-" Setting up Vundle - the vim plugin handler
-let iCanHazVundle = 1
-let vundle_readme = expand('~/vim/bundle/vundle/README.md')
-if !filereadable(vundle_readme)
-  echo "Installing Vundle..."
-  echo ""
-  silent !mkdir -p ~/vim/bundle
-  silent !git clone https://github.com/gmarik/vundle ~/vim/bundle/vundle
-  let iCanHazVundle = 0
-endif
+call plug#begin('~/.vim/plugged')
 
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-
-" let Vundle manage Vundle, required
-Bundle 'gmarik/vundle'
-Bundle 'Syntastic'
-Bundle 'altercation/vim-colors-solarized'
+Plug 'Syntastic'
+Plug 'altercation/vim-colors-solarized'
 
 " Plugins
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-surround'
-Plugin 'bling/vim-airline'
-Plugin 'SirVer/ultisnips'
-Plugin 'edsono/vim-matchit'
-Plugin 'honza/vim-snippets'
-Plugin 'justinmk/vim-sneak'
-Plugin 'kien/ctrlp.vim'
-Plugin 'sjl/gundo.vim'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'rstacruz/sparkup'
-Plugin 'godlygeek/tabular'
-Plugin 'majutsushi/tagbar'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'bling/vim-airline'
+Plug 'SirVer/ultisnips'
+Plug 'edsono/vim-matchit'
+Plug 'honza/vim-snippets'
+Plug 'justinmk/vim-sneak'
+Plug 'kien/ctrlp.vim'
+Plug 'sjl/gundo.vim'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'rstacruz/sparkup'
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
 
 " Color schemes
-Plugin 'tomasr/molokai'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'morhetz/gruvbox'
+Plug 'tomasr/molokai'
+Plug 'flazz/vim-colorschemes'
+Plug 'morhetz/gruvbox'
 
-Bundle "L9"
-Bundle "FuzzyFinder"
+Plug 'L9'
+Plug 'FuzzyFinder'
+Plug 'ack.vim'
 
-Bundle "ack.vim"
+call plug#end()
 
-if iCanHazVundle == 0
-  echo "Installing Bundles, please ignore key map error messages"
-  echo ""
-  :BundleInstall
-endif
+
 
 " Setting up Vundle - the vim plugin bundler end
 
